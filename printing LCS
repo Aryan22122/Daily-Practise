@@ -1,0 +1,62 @@
+public class printLCS {
+    public static String fn(int n , int m , String str1, String str2){
+        if(n<0 || m<0) {
+            return "";
+        }
+        if(str1.charAt(n)==str2.charAt(m)){
+            return  fn(n-1,m-1,str1,str2) + str1.charAt(n) ;
+
+        }
+        String  p1 = fn(n-1,m,str1,str2);
+        String p2 = fn(n,m-1,str1,str2);
+        return p1.length() > p2.length() ? p1 : p2;
+    }
+    public static String printintUsingTabulation(String str, String str2){
+        int n = str.length();
+        int m = str2.length();
+        int [][] dp = new int[n+1][m+1];
+
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(str.charAt(i-1)==str2.charAt(j-1)) {
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                }
+                else{
+                    int p1 = dp[i-1][j];
+                    int p2 = dp[i][j-1] ;
+                    dp[i][j] = Math.max(p1,p2);
+                }
+            }
+        }
+        int i =n;
+        int j = m;
+        StringBuilder sb = new StringBuilder();
+        while(i >0 && j>0){
+            if(str.charAt(i-1)==str2.charAt(j-1)){
+                sb.append(str.charAt(i-1));
+                i--;j--;
+            }
+            else{
+
+                if(dp[i-1][j] > dp[i][j-1]){
+                    i--;
+                }else{
+                    j--;
+                }
+            }
+
+        }
+        return sb.reverse().toString();
+
+    }
+    public static void main(String[] args) {
+        String str= "abcde";
+        String str2 = "bdjke";
+        int n = str.length();
+        int m = str2.length();
+        String ans=  fn(n-1,m-1,str,str2);
+        System.out.println(ans);
+        System.out.println(printintUsingTabulation(str,str2));
+    }
+
+}
