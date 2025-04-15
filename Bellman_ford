@@ -1,0 +1,30 @@
+class Solution {
+    public int[] bellmanFord(int V, int[][] edges, int src) {
+        int inf  = 100000000;
+        int[] dis = new int[V];
+        Arrays.fill(dis, inf);
+        dis[src] = 0;
+
+        for (int i = 0; i < V - 1; i++) {
+            for (int[] el : edges) {
+                int u = el[0];
+                int v = el[1];
+                int dist = el[2];
+                if (dis[u] != inf && dis[u] + dist < dis[v]) {
+                    dis[v] = dis[u] + dist;
+                }
+            }
+        }
+
+        for (int[] el : edges) {
+            int u = el[0];
+            int v = el[1];
+            int dist = el[2];
+            if (dis[u] !=inf && dis[u] + dist < dis[v]) {
+                return new int[]{-1};  
+            }
+        }
+
+        return dis;
+    }
+}
