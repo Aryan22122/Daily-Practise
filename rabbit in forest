@@ -1,0 +1,18 @@
+class Solution {
+    public int numRabbits(int[] answers) {
+        Map<Integer,Integer> hm = new HashMap<>();
+        int total = 0;
+        for(int el : answers){
+            hm.put(el,hm.getOrDefault(el,0)+1);
+        }
+        for(Map.Entry<Integer,Integer> el : hm.entrySet()){
+            int fi = el.getKey();
+            int sec = el.getValue();
+            int helper = (int)Math.ceil(((double)sec/(fi+1)));
+
+            total+= ((fi+1)*helper);
+        }
+        return total;
+        
+    }
+}
